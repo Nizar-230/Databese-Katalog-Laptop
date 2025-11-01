@@ -48,10 +48,10 @@ tr td {
 
 .daftar {
     position: absolute;
-    top: 115px;
+    top: 129px;
     left: 12%;
     text-decoration: none;
-    background-color:crimson;
+    background-color:  crimson;
     padding: 10px;
     color: #fff;
     border-radius: 5px;

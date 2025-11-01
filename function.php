@@ -1,5 +1,6 @@
 <?php
 $db = mysqli_connect("localhost", "root", "", "daftar_laptop");
+
 function query($query) {
     global $db;
     if (!$db) {
@@ -15,6 +16,7 @@ function query($query) {
 }
 
 function tambah($data) {
+
     global $db;
     $nama_laptop = htmlspecialchars($data["Laptop"]);
     $ram = htmlspecialchars($data["Ram"]);
@@ -26,10 +28,9 @@ function tambah($data) {
 
     $query = "INSERT INTO daftar_laptop (Laptop, Ram, Memory, Procecor, Layar, Harga, Gambar)
             VALUES
-            ('$nama_laptop', '$ram', '$memory', '$procecor', '$layar', '$harga', '$gambar')";         
+            ('$nama_laptop', '$ram', '$memory', '$procecor', '$layar', '$harga', '$gambar')";
     mysqli_query($db, $query);
     return mysqli_affected_rows($db);
-
 }
 
 function hapus($id) {
@@ -58,8 +59,21 @@ function edit($data) {
             Layar = '$layar',
             Harga = '$harga',
             Gambar = '$gambar'
-        WHERE Id = $id";         
+        WHERE Id = $id";
     mysqli_query($db, $query);
 
     return mysqli_affected_rows($db);
+}
+
+function cari($keyword) {
+    $query ="SELECT * FROM daftar_laptop
+            WHERE 
+            Laptop LIKE '%$keyword%' OR
+            Ram LIKE '%$keyword%' OR
+            Memory LIKE '%$keyword%' OR
+            Procecor LIKE '%$keyword%' OR
+            Layar LIKE '%$keyword%' OR
+            Harga LIKE '%$keyword%' 
+    ";
+    return query($query);
 }

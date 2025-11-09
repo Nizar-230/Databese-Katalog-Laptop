@@ -1,4 +1,4 @@
-<?php 
+<?php
 require "function.php";
 $daftar = query("SELECT * FROM daftar_laptop ");
 
@@ -15,20 +15,24 @@ if (isset($_POST["cari"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Admin</title>
     <link rel="stylesheet" href="css/table.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
 <body>
-    <section class="head">
+    <section class="head mt-3 p-4">
         <h1 id="judul">Daftar Laptop</h1>
-        <a href="tambah.php" class="daftar">Tambah Daftar</a>
+        <a href="tambah.php" class="daftar mt-5 p-2">Tambah Daftar</a>
+    
+    <div class="d-flex justify-content-center">
+        <form class="d-flex align-items-center mt-5 " role="search" action="" method="post">
+            <input class="form-control me-2 border border-dark" name="keyword" type="search" placeholder="Search" aria-label=""/>
+            <button class="btn btn-outline-primary " type="submit" name="cari">Search</button>
+        </form>
+        </div>
     </section>
-    <form action="" method="post">
-        <input type="text" name="keyword" size="20" autofocus placeholder="masukan pencarian..." autocomplete="off">
-        <button type="submit" name="cari">Cari</button>
-    </form>
     <section class="content">
         <br>
-        <table cellspacing="0" class="tbl">
+        <table cellspacing="0" class="tbl m-3">
             <tr>
                 <th>No</th>
                 <th>Aksi</th>

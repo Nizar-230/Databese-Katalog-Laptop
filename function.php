@@ -1,7 +1,8 @@
 <?php
 $db = mysqli_connect("localhost", "root", "", "daftar_laptop");
 
-function query($query) {
+function query($query)
+{
     global $db;
     if (!$db) {
         exit("Database Connection Error: " . mysqli_connect_error($db));
@@ -15,7 +16,8 @@ function query($query) {
     return $rows;
 }
 
-function tambah($data) {
+function tambah($data)
+{
 
     global $db;
     $nama_laptop = htmlspecialchars($data["Laptop"]);
@@ -24,7 +26,11 @@ function tambah($data) {
     $procecor = htmlspecialchars($data["Procecor"]);
     $layar = htmlspecialchars($data["Layar"]);
     $harga = htmlspecialchars($data["Harga"]);
-    $gambar = htmlspecialchars($data["Gambar"]);
+
+    $gambar = upload();
+    if (!$gambar) {
+        return false;
+    }
 
     $query = "INSERT INTO daftar_laptop (Laptop, Ram, Memory, Procecor, Layar, Harga, Gambar)
             VALUES
@@ -33,13 +39,55 @@ function tambah($data) {
     return mysqli_affected_rows($db);
 }
 
-function hapus($id) {
+function upload()
+{
+    $namaFile = $_FILES["Gambar"]["name"];
+    $ukuran = $_FILES["Gambar"]["size"];
+    $eror = $_FILES["Gambar"]["error"];
+    $repostImg = $_FILES["Gambar"]["tmp_name"];
+
+    if ($eror === 4) {
+        echo "<script>
+            alert('Pilih gambar terlebih dahulu!')
+        </script>";
+        return false;
+    }
+
+    $ekstensi_Img_Valid = ["jpg", "jpeg", "png"];
+    $ekstensi_Img = explode(".", $namaFile);
+    $ekstensi_Img = strtolower(end($ekstensi_Img));
+
+    if (!in_array($ekstensi_Img, $ekstensi_Img_Valid)) {
+        echo "<script>
+            alert('File yang anda upload bukan gambar!')
+        </script>";
+        return false;
+    }
+
+    if ($ukuran > 1000000) {
+        echo "<script>
+            alert('Ukuran gambar anda terlalu besar!')
+        </script>";
+        return false;
+    }
+
+    $nama_File_Baru = uniqid();
+    $nama_File_Baru .= ".";
+    $nama_File_Baru .= $ekstensi_Img;
+
+    move_uploaded_file($repostImg, "img/" . $nama_File_Baru);
+    return $nama_File_Baru;
+}
+
+function hapus($id)
+{
     global $db;
     mysqli_query($db, "DELETE FROM daftar_laptop WHERE id = $id");
     return mysqli_affected_rows($db);
 }
 
-function edit($data) {
+function edit($data)
+{
     global $db;
 
     $id = $data["id"];
@@ -49,7 +97,14 @@ function edit($data) {
     $procecor = htmlspecialchars($data["Procecor"]);
     $layar = htmlspecialchars($data["Layar"]);
     $harga = htmlspecialchars($data["Harga"]);
-    $gambar = htmlspecialchars($data["Gambar"]);
+    $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+    if ($_FILES["Gambar"]["error"] === 4) {
+        $gambar = $gambarLama;
+    } else {
+        $gambar = upload();
+    }
+
 
     $query = "UPDATE  daftar_laptop SET 
             Laptop = '$nama_laptop', 
@@ -65,8 +120,9 @@ function edit($data) {
     return mysqli_affected_rows($db);
 }
 
-function cari($keyword) {
-    $query ="SELECT * FROM daftar_laptop
+function cari($keyword)
+{
+    $query = "SELECT * FROM daftar_laptop
             WHERE 
             Laptop LIKE '%$keyword%' OR
             Ram LIKE '%$keyword%' OR

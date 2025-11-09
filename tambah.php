@@ -34,7 +34,7 @@ if (isset($_POST["submit"])) {
     <section class="content2">
         <div class="container">
             <h1 id="jdl">Tambah Data</h1>
-            <form action="" method="post" class="form">
+            <form action="" method="post" class="form" enctype="multipart/form-data">
                 <ul>
                     <li>
                         <label for="Procecor">Procecor : </label>

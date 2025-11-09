@@ -31,15 +31,16 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Daftar Laptop</title>
-    <link rel="stylesheet" href="css/tambah.css">
+    <link rel="stylesheet" href="css/edit.css">
 </head>
 
 <body>
     <section class="content2">
         <div class="container">
             <h1 id="jdl">Edit Data</h1>
-            <form action="" method="post" class="form">
+            <form action="" method="post" class="form" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= $dtl["Id"]; ?>">
+                <input type="hidden" name="gambarLama" value="<?= $dtl["Gambar"]; ?>">
                 <ul>
                     <li>
                         <label for="Procecor">Procecor : </label>
@@ -67,7 +68,10 @@ if (isset($_POST["submit"])) {
                     </li>
                     <li>
                         <label for="Gambar">Gambar: </label>
-                        <input type="text" name="Gambar" id="Gambar" value="<?= $dtl["Gambar"]; ?>">
+                        <img src="img/<?= $dtl ["Gambar"] ?>" >
+                        <div class="chosse">
+                        <input type="file" name="Gambar" id="Gambar">
+                        </div>
                     </li>
                     <li>
                         <button type="submit" name="submit" id="button">Edit</button>

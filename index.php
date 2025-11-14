@@ -20,7 +20,7 @@ if (isset($_POST["cari"])) {
 
 <body>
     <section class="head mt-3 p-4">
-        <h1 id="judul">Daftar Laptop</h1>
+        <h1 id="judul" class="mb-3">Daftar Laptop</h1>
         <a href="tambah.php" class="daftar mt-5 p-2">Tambah Daftar</a>
     
     <div class="d-flex justify-content-center">
